@@ -1,75 +1,74 @@
-# 📊 Olist E-Commerce: Análise de Dados e Pipeline de Engenharia
+# 📊 Data Analytics Olist: Otimização de Performance e Visualização de Dados
 
-![Status](https://img.shields.io/badge/Status-Concluído-green)
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Pandas](https://img.shields.io/badge/Lib-Pandas-150458)
-![Seaborn](https://img.shields.io/badge/Lib-Seaborn-green)
+[![Status](https://img.shields.io/badge/Status-Concluído-green)](#)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-ETL%20%26%20Análise%20de%20Dados-150458?logo=pandas)](https://pandas.pydata.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-Visualização%20de%20Dados-4C72B0?logo=python)](https://seaborn.pydata.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-Data%20Visualization-11557C?logo=python)](https://matplotlib.org/)
+[![Looker Studio](https://img.shields.io/badge/Looker%20Studio-Dashboard-4285F4?logo=google)](https://lookerstudio.google.com/reporting/088487fd-c2bb-410c-8a1a-2473f69f1689)
 
 ## 📝 Sobre o Projeto
-Este projeto consiste na análise exploratória, limpeza e analise de dados de um dataset real de e-commerce brasileiro (Olist). O objetivo foi transformar dados brutos relacionais em insights de negócio e preparar uma base consolidada para dashboarding.
+Este projeto foi desenvolvido como **Projeto Final do curso de Analista de Dados (EBAC)**, com o objetivo de aplicar o ciclo completo de uma análise de dados profissional. O trabalho percorre desde a ingestão de dados brutos até a entrega de insights estratégicos, simulando um cenário real de mercado para tomada de decisão.
 
-O projeto simula um cenário real de um Analista de Dados, onde é necessário validar a qualidade dos dados, criar novas métricas e entregar valor para a tomada de decisão.
+---
 
-## 🗂️ Fonte de Dados
-Os dados públicos foram obtidos do **Brazilian E-Commerce Public Dataset by Olist** (Kaggle).
-O esquema original conta com 8 tabelas relacionais. Para este projeto, focamos na modelagem das seguintes tabelas principais:
-- `orders`: Pedidos e status
-- `order_items`: Detalhes dos itens comprados
-- `products`: Cadastro de produtos e categorias
+## 🏗️ Fase 1: Seleção dos Dados
+A base escolhida para este projeto é o **Brazilian E-Commerce Public Dataset by Olist**, extraído do Kaggle. 
 
-## 🛠️ Tecnologias Utilizadas
-- **Python**: Linguagem principal.
-- **Pandas**: Manipulação e tratamento de dados (ETL).
-- **Matplotlib & Seaborn**: Visualização de dados estática.
-- **VS Code & Jupyter Notebook**: Ambiente de desenvolvimento.
+**Requisitos atendidos:**
+* **Relacional**: Conjunto de 8 tabelas cruzadas via IDs únicos.
+* **Variáveis Temporais**: Tabela de pedidos com múltiplos timestamps de status (Data de compra, aprovação, entrega).
+* **Volumetria**: Tabelas com alto número de colunas e registros (acima de 100 mil linhas), garantindo robustez estatística.
 
-## ⚙️ Etapas do Pipeline de Dados
+---
 
-### 1. Ingestão e Validação
-- Carregamento de múltiplos arquivos CSV (formato Flat File).
-- Verificação de tipos de dados (Schema Validation).
-- Identificação de volumetria e consistência.
+## 🔍 Fase 2: Análise Exploratória (EDA)
+Nesta etapa, os dados foram investigados para compreender padrões, tendências e relacionamentos fundamentais para o negócio.
 
-### 2. Tratamento e Limpeza (Data Cleaning)
-- **Correção de Tipos:** Conversão de colunas de data (`order_purchase_timestamp`, etc) que estavam como string.
-- **Tratamento de Nulos:** Remoção de registros inconsistentes para análises de peso e frete.
+**Principais análises realizadas:**
+* **Distribuição e Frequência**: Análise do volume de vendas mensal para identificar sazonalidade.
+* **Top Categorias**: Identificação das categorias que mais geram receita (Beleza e Saúde, Relógios Presentes, etc.).
+* **Identificação de Outliers**: Uso de Boxplots para analisar a dispersão de preços e valores discrepantes.
+* **Correlação Logística**: Análise de dispersão entre peso do produto e valor do frete pago.
+* **Performance Logística**: Histogramas para medir a eficiência e atrasos no tempo de entrega.
 
-### 3. Modelagem e Cruzamento (Data Modeling)
-- Criação de uma Tabela Analítica (OBT - One Big Table) através de JOINs (`merge`):
-  - `Orders` LEFT JOIN `Items` ON `order_id`
-  - RESULT LEFT JOIN `Products` ON `product_id`
+---
 
-### 4. Engenharia de Atributos (Feature Engineering)
-Criação de novas colunas para enriquecer a análise:
-- `month_year`: Para análise temporal (safra).
-- `delivery_days`: Cálculo do tempo de entrega (Data Entrega - Data Compra).
+## ⚙️ Fase 3: Tratamento e Preparação (ETL)
+O pipeline de dados foi construído em Python para limpar inconsistências e preparar a **OBT (One Big Table)**.
 
-## 📊 Principais Insights Obtidos
+* **Data Cleaning**: Correção de tipos de dados (strings para datetime) e tratamento de valores ausentes/nulos.
+* **Modelagem Analítica**: Realização de JOINs (`merge`) entre as tabelas `orders`, `order_items` e `products`.
+* **Feature Engineering (Novas Colunas)**:
+    * `month_year`: Criada para facilitar a análise de safras e tendências mensais.
+    * `delivery_days`: Cálculo do tempo real de entrega (Data Entrega - Data Compra).
 
-### 1. Evolução Temporal das Vendas
-Notou-se um crescimento consistente no volume de pedidos a partir de 2017, com clara tendência de alta e estabilização em 2018.
-![Vendas Mensais](img/1_vendas_mensais.png)
+---
 
-### 2. Categorias Campeãs (Receita)
-As categorias como "Beleza e Saúde" e "Relógios Presentes" lideram o faturamento, indicando o perfil de consumo predominante na plataforma.
-![Top Categorias](img/2_top_categorias.png)
+## 📈 Fase 4: Visualização e Dashboard Interativo (BI)
+Transformação das descobertas em um dashboard executivo no **Looker Studio**, permitindo navegação dinâmica pelos dados da Olist (2016-2018).
 
-### 3. Distribuição de Preços (Ticket Médio)
-O Boxplot revela que a grande concentração de vendas ocorre em produtos de ticket baixo/médio. No entanto, há diversos *outliers* (pontos fora da curva) de valor muito alto que puxam a média para cima.
+### Arquitetura do Dashboard
+* **Data Blending**: Combinação interna entre a tabela analítica e o cadastro de clientes para possibilitar a análise geográfica por estado.
+* **Visualizações Implementadas**:
+    * **KPI Cards**: Receita Total, Qtd. Pedidos, Ticket Médio, Frete Médio e Prazo Médio (Dias).
+    * **Gráfico de Barras**: Top 10 categorias por faturamento.
+    * **Série Temporal**: Evolução do Faturamento Mensal (Barras).
+    * **Mapa de Bolhas**: Distribuição de clientes por estado com precisão via `CONCAT` geográfica.
+    * **Gráfico de Rosca**: Proporção de pedidos por Status (Logística e Saúde da Operação).
+    * **Tabela Dinâmica**: Cruzamento analítico de Faturamento por Categoria vs. Ano.
 
-![Boxplot Preços](img/3_boxplot_precos.png)
+### Interatividade e UI/UX
+* **Filtros Dinâmicos**: Controle de período fixo e busca por `order_id` para auditoria.
+* **Filtro Cruzado**: Seleções em um gráfico (ex: clicar em um estado) reajustam todo o dashboard automaticamente.
+* **Design**: Estilização em Dark Mode com acentos em verde para consistência visual com Seaborn.
 
-### 4. Correlação Logística (Peso x Frete)
-Confirmamos através do gráfico de dispersão que existe uma correlação positiva: quanto maior o peso do produto, maior tende a ser o valor do frete pago pelo cliente.
-![Correlação](img/4_correlacao_peso_frete.png)
+---
 
-### 5. Performance de Entrega
-O histograma demonstra que a eficiência logística é alta, com a maioria das entregas concentrada nos primeiros dias (assimetria à direita). Porém, nota-se uma "cauda longa", representando pedidos que sofreram atrasos significativos.
-![Tempo de Entrega](img/5_tempo_entrega.png)
+## 🖼️ Visualização do Dashboard Final
 
-## 🚀 Como Executar
-1. Clone o repositório.
-2. Baixe o dataset no Kaggle e coloque na pasta `data/raw`.
-3. Instale as dependências:
-   ```bash
-   pip install pandas seaborn matplotlib 
+
+🔗 **[Acesse o Dashboard Interativo aqui](https://lookerstudio.google.com/reporting/088487fd-c2bb-410c-8a1a-2473f69f1689)**
+
+---
+*Projeto desenvolvido por Matheus Araujo como parte do portfólio de Data Analytics.*

@@ -1,0 +1,13 @@
+archive/
+data/raw/
+*.csv
+!olist_dados_analise_final.csv
+__pycache__/
+*.pyc
+*.ipynb_checkpoints
+.venv/
+venv/
+env/
+.env
+.DS_Store
+Thumbs.db
